@@ -49,15 +49,16 @@
 
 </html> -->
 <%- include('partials/header.ejs') %>
+<main>
   <div class="app-title">
-      <div>
-          <h1> <i class="icofont-list"></i> Product Lists </h1>
-      </div>
-      <ul class="app-breadcrumb breadcrumb side">
-          <a href="../../admin/addproduct" class="btn btn-outline-primary">
-              <i class="icofont-plus"></i>
-          </a>
-      </ul>
+        <div>
+            <h1> <i class="icofont-list"></i> Product Lists </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb side">
+            <a href="../../admin/addproduct" class="btn btn-outline-primary">
+                <i class="icofont-plus"></i>
+            </a>
+        </ul>
   </div>
   <div class="row">
       <div class="col-md-12">
@@ -69,9 +70,9 @@
                               <tr>
                                   <th> No </th>
                                   <th> Name </th>
-                                  <th> SKU </th>
-                                  <th> Description </th>
                                   <th> Price </th>
+                                  <th> Description </th>
+                                  <th> Category </th>
                                   <th> Action </th>
                               </tr>
                           </thead>
@@ -95,13 +96,13 @@
                                       </div>
                                   </td>
                                   <td>
-                                      <%= product.sku %>
+                                    <%= product.price %> Ks
                                   </td>
                                   <td>
                                      <%= product.description %>
                                   </td>
                                   <td>
-                                    <%= product.price %> Ks
+                                    <%= product.category %>
                                   </td>
                                   <td>
                                       <a href="#" class="btn btn-warning">
@@ -122,5 +123,7 @@
               </div>
           </div>
       </div>
-  </div>
+  </div>  
+</main>  
+
 <%- include('partials/footer.ejs') %>    

@@ -190,7 +190,7 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
       let description = req.body.description;
       let img_url = "";
       let price = parseInt(req.body.price); 
-      let sku = req.body.sku;
+      let category = req.body.category;
 
       let today = new Date();
 
@@ -205,7 +205,7 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
               description: description,
               image: img_url,
               price:price,
-              sku:sku,
+              category:category,
               created_on:today
               }).then(success => {   
                 console.log("DATA SAVED")
