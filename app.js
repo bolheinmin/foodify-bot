@@ -206,7 +206,7 @@ app.get('/admin/products', async (req, res) => {
         console.log('SESS:', sess);
         if (sess.login) {
             res.render('products.ejs', {
-               data: data
+                data: data
             });
         } else {
             res.send('you are not authorized to view this page');
@@ -215,7 +215,15 @@ app.get('/admin/products', async (req, res) => {
 });
 
 app.get('/admin/addproduct', async function(req, res) {
-    res.render('addproduct.ejs');
+    sess = req.session;
+    console.log('SESS:', sess);
+    if (sess.login) {
+        res.render('addproduct.ejs', {
+            data: data
+        });
+    } else {
+        res.send('you are not authorized to view this page');
+    }
 });
 
 app.post('/admin/saveproduct', upload.single('file'), function(req, res) {
@@ -274,9 +282,15 @@ app.get('/admin/orders', async (req, res) => {
             data.push(order);
 
         });
-        res.render('order_records.ejs', {
-            data: data
-        });
+        sess = req.session;
+        console.log('SESS:', sess);
+        if (sess.login) {
+            res.render('order_records.ejs', {
+                data: data
+            });
+        } else {
+            res.send('you are not authorized to view this page');
+        }
     }
 });
 

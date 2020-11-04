@@ -12,33 +12,22 @@
 <body>
     <div class="container">
         <h1 class="text-center">Products</h1>
-        <div class="row align-items-center">
-            <div class="col-3 align-items-center">
-                <p class="d-inline pr-3"> Order By </p>
-                <div class="hov-dropdown d-inline-block">
-                    <a class="text-decoration-none text-dark font-weight-bold" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2"> Category </span>
-                        <i class="icofont-rounded-down pt-2"></i>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                        <a class="dropdown-item" href="breakfast_food">
-                          Breakfast Food
-                        </a>
-                        <a class="dropdown-item" href="lunch_food">
-                          Lunch Food
-                        </a>
-                        <a class="dropdown-item" href="chinese_food">
-                          Chinese Food
-                        </a>
-                        <a class="dropdown-item" href="juice">
-                          Juice
-                        </a>
-                        <div class="dropdown-divider"></div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Order by Category
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Breakfast Food</a>
+                        <a class="dropdown-item" href="#">Lunch Food</a>
+                        <a class="dropdown-item" href="#">Chinese Food</a>
+                        <a class="dropdown-item" href="#">Juice</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
+        <div class="ml-4 mb-3 row">
             <% data.forEach(function(product){ %>
             <div class="col-md-12">
                 <div class="card" style="width: 18rem;">
