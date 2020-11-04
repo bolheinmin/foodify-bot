@@ -3,9 +3,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const APP_URL = process.env.APP_URL;
 
 // Imports dependencies and set up http server
-const 
-    { uuid } = require('uuidv4'), 
-    { format } = require('util'),
+const { uuid } = require('uuidv4'), { format } = require('util'),
     request = require('request'),
     express = require('express'),
     body_parser = require('body-parser'),
@@ -26,7 +24,7 @@ app.use(express.static(__dirname + '/public'));
 
 
 const bot_questions = {
-    "q1": "please enter you name",
+    "q1": "please enter your full name",
     "q2": "please enter your phone number",
     "q3": "please enter your address",
     "q4": "please enter your order reference number"
@@ -146,35 +144,35 @@ app.get('/', function(req, res) {
 });
 
 // Start Login & Logout\
-app.post('/login',function(req,res){    
+app.post('/login', function(req, res) {
     sess = req.session;
 
     let username = req.body.username;
     let password = req.body.password;
 
-    if(username == 'admin' && password == process.env.ADMIN_PW){
-      sess.username = 'admin';
-      sess.login = true;
-      res.redirect('/admin/products');
-    }else{
-      res.send('login failed');
-    }   
+    if (username == 'admin' && password == process.env.ADMIN_PW) {
+        sess.username = 'admin';
+        sess.login = true;
+        res.redirect('/admin/products');
+    } else {
+        res.send('login failed');
+    }
 });
 
-app.get('/login',function(req,res){    
+app.get('/login', function(req, res) {
     sess = req.session;
 
-    if(sess.login){
-       res.redirect('/admin/products');
-    }else{
-      res.render('login.ejs');
-    } 
-    
+    if (sess.login) {
+        res.redirect('/admin/products');
+    } else {
+        res.render('login.ejs');
+    }
+
 });
 
-app.get('/admin/logout',function(req,res){ 
+app.get('/admin/logout', function(req, res) {
     //sess = req.session;   
-    req.session.destroy(null);  
+    req.session.destroy(null);
     res.redirect('../login');
 });
 
@@ -204,9 +202,15 @@ app.get('/admin/products', async (req, res) => {
             data.push(product);
 
         });
-
-        res.render('products.ejs', { data: data });
-
+        sess = req.session;
+        console.log('SESS:', sess);
+        if (sess.login) {
+            res.render('products.ejs', {
+               data: data
+            });
+        } else {
+            res.send('you are not authorized to view this page');
+        }
     }
 });
 
@@ -288,8 +292,8 @@ app.get('/admin/update_order/:doc_id', async function(req, res) {
         let data = doc.data();
         data.doc_id = doc.id;
 
-        res.render('update_order.ejs', { 
-          data: data 
+        res.render('update_order.ejs', {
+            data: data
         });
     }
 });
