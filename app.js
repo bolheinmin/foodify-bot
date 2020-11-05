@@ -335,6 +335,7 @@ app.post('/admin/update_order', function(req, res) {
 
 
 //route url
+// ALL CATEGORIES
 app.get('/shop', async function(req, res) {
 
     customer[user_id].id = user_id;
@@ -356,7 +357,7 @@ app.get('/shop', async function(req, res) {
     }
 
 
-    const productsRef = db.collection('products').where("category", "==", "Breakfast Food");
+    const productsRef = db.collection('products').orderBy('created_on', 'desc');
     const snapshot = await productsRef.get();
 
     if (snapshot.empty) {
@@ -383,9 +384,215 @@ app.get('/shop', async function(req, res) {
 
     //console.log('DATA:', data); 
     res.render('shop.ejs', { data: data });
-
 });
 
+// START BREAKFASTFOOD CATEGORY
+app.get('/breakfast_food', async function(req, res) {
+
+    customer[user_id].id = user_id;
+
+    const userRef = db.collection('users').doc(user_id);
+    const user = await userRef.get();
+    if (!user.exists) {
+        customer[user_id].name = "";
+        customer[user_id].phone = "";
+        customer[user_id].address = "";
+        customer[user_id].points = 0;
+
+    } else {
+        customer[user_id].name = user.data().name;
+        customer[user_id].phone = user.data().phone;
+        customer[user_id].address = user.data().address;
+
+        customer[user_id].points = user.data().points;
+    }
+
+
+    const productsRef = db.collection('products').where("category", "==", "Breakfast Food").orderBy('created_on', 'desc');
+    const snapshot = await productsRef.get();
+
+    if (snapshot.empty) {
+        res.send('no data');
+    }
+
+    let data = [];
+
+    snapshot.forEach(doc => {
+
+        let product = {};
+
+        product = doc.data();
+
+        product.id = doc.id;
+
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        product.created_on = d;
+
+        data.push(product);
+
+    });
+
+    //console.log('DATA:', data); 
+    res.render('shop.ejs', { data: data });
+});
+// END BREAKFASTFOOD CATEGORY
+
+// START LUNCHFOOD CATEGORY
+app.get('/lunch_food', async function(req, res) {
+
+    customer[user_id].id = user_id;
+
+    const userRef = db.collection('users').doc(user_id);
+    const user = await userRef.get();
+    if (!user.exists) {
+        customer[user_id].name = "";
+        customer[user_id].phone = "";
+        customer[user_id].address = "";
+        customer[user_id].points = 0;
+
+    } else {
+        customer[user_id].name = user.data().name;
+        customer[user_id].phone = user.data().phone;
+        customer[user_id].address = user.data().address;
+
+        customer[user_id].points = user.data().points;
+    }
+
+
+    const productsRef = db.collection('products').where("category", "==", "Lunch Food").orderBy('created_on', 'desc');
+    const snapshot = await productsRef.get();
+
+    if (snapshot.empty) {
+        res.send('no data');
+    }
+
+    let data = [];
+
+    snapshot.forEach(doc => {
+
+        let product = {};
+
+        product = doc.data();
+
+        product.id = doc.id;
+
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        product.created_on = d;
+
+        data.push(product);
+
+    });
+
+    //console.log('DATA:', data); 
+    res.render('shop.ejs', { data: data });
+});
+// END LUNCHFOOD CATEGORY
+
+// START CHINESEFOOD CATEGORY
+app.get('/chinese_food', async function(req, res) {
+
+    customer[user_id].id = user_id;
+
+    const userRef = db.collection('users').doc(user_id);
+    const user = await userRef.get();
+    if (!user.exists) {
+        customer[user_id].name = "";
+        customer[user_id].phone = "";
+        customer[user_id].address = "";
+        customer[user_id].points = 0;
+
+    } else {
+        customer[user_id].name = user.data().name;
+        customer[user_id].phone = user.data().phone;
+        customer[user_id].address = user.data().address;
+
+        customer[user_id].points = user.data().points;
+    }
+
+
+    const productsRef = db.collection('products').where("category", "==", "Chinese Food").orderBy('created_on', 'desc');
+    const snapshot = await productsRef.get();
+
+    if (snapshot.empty) {
+        res.send('no data');
+    }
+
+    let data = [];
+
+    snapshot.forEach(doc => {
+
+        let product = {};
+
+        product = doc.data();
+
+        product.id = doc.id;
+
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        product.created_on = d;
+
+        data.push(product);
+
+    });
+
+    //console.log('DATA:', data); 
+    res.render('shop.ejs', { data: data });
+});
+// END CHINESEFOOD CATEGORY
+
+// START JUICE CATEGORY
+app.get('/juice', async function(req, res) {
+
+    customer[user_id].id = user_id;
+
+    const userRef = db.collection('users').doc(user_id);
+    const user = await userRef.get();
+    if (!user.exists) {
+        customer[user_id].name = "";
+        customer[user_id].phone = "";
+        customer[user_id].address = "";
+        customer[user_id].points = 0;
+
+    } else {
+        customer[user_id].name = user.data().name;
+        customer[user_id].phone = user.data().phone;
+        customer[user_id].address = user.data().address;
+
+        customer[user_id].points = user.data().points;
+    }
+
+
+    const productsRef = db.collection('products').where("category", "==", "Juice").orderBy('created_on', 'desc');
+    const snapshot = await productsRef.get();
+
+    if (snapshot.empty) {
+        res.send('no data');
+    }
+
+    let data = [];
+
+    snapshot.forEach(doc => {
+
+        let product = {};
+
+        product = doc.data();
+
+        product.id = doc.id;
+
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        product.created_on = d;
+
+        data.push(product);
+
+    });
+
+    //console.log('DATA:', data); 
+    res.render('shop.ejs', { data: data });
+});
+// END JUICE CATEGORY
 
 app.post('/cart', function(req, res) {
 
@@ -1090,7 +1297,7 @@ const showBreakfastFood = (sender_psid) => {
                     "buttons": [{
                             "type": "web_url",
                             "title": "View",
-                            "url": APP_URL + "shop/",
+                            "url": APP_URL + "breakfast_food/",
                             "webview_height_ratio": "full",
                             "messenger_extensions": true,
                         },
@@ -1117,7 +1324,7 @@ const showLunchFood = (sender_psid) => {
                     "buttons": [{
                             "type": "web_url",
                             "title": "View",
-                            "url": APP_URL + "shop/",
+                            "url": APP_URL + "lunch_food/",
                             "webview_height_ratio": "full",
                             "messenger_extensions": true,
                         },
@@ -1144,7 +1351,7 @@ const showChineseFood = (sender_psid) => {
                     "buttons": [{
                             "type": "web_url",
                             "title": "View",
-                            "url": APP_URL + "shop/",
+                            "url": APP_URL + "chinese_food/",
                             "webview_height_ratio": "full",
                             "messenger_extensions": true,
                         },
@@ -1171,7 +1378,7 @@ const showJuice = (sender_psid) => {
                     "buttons": [{
                             "type": "web_url",
                             "title": "View",
-                            "url": APP_URL + "shop/",
+                            "url": APP_URL + "juice/",
                             "webview_height_ratio": "full",
                             "messenger_extensions": true,
                         },
