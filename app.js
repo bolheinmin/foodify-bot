@@ -460,7 +460,7 @@ app.get('/lunch_food', async function(req, res) {
     }
 
 
-    const productsRef = db.collection('products').where("category", "==", "Lunch Food").orderBy('created_on', 'desc');
+    const productsRef = db.collection('products').where("category", "==", "Lunch Food");
     const snapshot = await productsRef.get();
 
     if (snapshot.empty) {
@@ -512,7 +512,7 @@ app.get('/chinese_food', async function(req, res) {
     }
 
 
-    const productsRef = db.collection('products').where("category", "==", "Chinese Food").orderBy('created_on', 'desc');
+    const productsRef = db.collection('products').where("category", "==", "Chinese Food");
     const snapshot = await productsRef.get();
 
     if (snapshot.empty) {
@@ -564,7 +564,7 @@ app.get('/juice', async function(req, res) {
     }
 
 
-    const productsRef = db.collection('products').where("category", "==", "Juice").orderBy('created_on', 'desc');
+    const productsRef = db.collection('products').where("category", "==", "Juice");
     const snapshot = await productsRef.get();
 
     if (snapshot.empty) {
