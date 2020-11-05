@@ -577,49 +577,6 @@ app.post('/order', function(req, res) {
 });
 
 
-
-
-
-//webview test
-app.get('/webview/:sender_id', function(req, res) {
-    const sender_id = req.params.sender_id;
-    res.render('webview.ejs', { title: "Hello!! from WebView", sender_id: sender_id });
-});
-
-
-
-app.post('/webview', upload.single('file'), function(req, res) {
-
-    let name = req.body.name;
-    let email = req.body.email;
-    let img_url = "";
-    let sender = req.body.sender;
-
-    console.log("REQ FILE:", req.file);
-
-
-
-    let file = req.file;
-    if (file) {
-        uploadImageToStorage(file).then((img_url) => {
-            db.collection('webview').add({
-                name: name,
-                email: email,
-                image: img_url
-            }).then(success => {
-                console.log("DATA SAVED")
-                thankyouReply(sender, name, img_url);
-            }).catch(error => {
-                console.log(error);
-            });
-        }).catch((error) => {
-            console.error(error);
-        });
-    }
-
-
-});
-
 //Set up Get Started Button. To run one time
 //eg https://fbstarter.herokuapp.com/setgsbutton
 app.get('/setgsbutton', function(req, res) {
@@ -686,6 +643,21 @@ function handleQuickReply(sender_psid, received_message) {
         case "shop":
             shopMenu(sender_psid);
             break;
+        case "menu-list":
+            showMenuList(sender_psid);
+            break;
+        case "breakfast-food":
+            showBreakfastFood(sender_psid);
+            break;
+        case "lunch-food":
+            showLunchFood(sender_psid);
+            break;
+        case "chinese-food":
+            showChineseFood(sender_psid);
+            break;
+        case "juice":
+            showJuice(sender_psid);
+            break;
         case "confirm-register":
             saveRegistration(userInputs[user_id], sender_psid);
             break;
@@ -736,10 +708,8 @@ const handleMessage = (sender_psid, received_message) => {
 
 
             case "start":
-                {
-                    startGreeting(sender_psid);
-                    break;
-                }
+                startGreeting(sender_psid);
+                break;
             case "text":
                 textReply(sender_psid);
                 break;
@@ -898,7 +868,7 @@ const botQuestions = (current_question, sender_psid) => {
 }
 
 const startGreeting = (sender_psid) => {
-    let response = { "text": "Welcome to NAY shop." };
+    let response = { "text": "Welcome to Thein Yar Zar." };
     callSend(sender_psid, response).then(() => {
         showMenu(sender_psid);
     });
@@ -923,10 +893,16 @@ const showMenu = async (sender_psid) => {
                 "content_type": "text",
                 "title": title,
                 "payload": "register",
-            }, {
+            }, 
+            {
                 "content_type": "text",
                 "title": "Shop",
                 "payload": "shop",
+            },
+            {
+                "content_type": "text",
+                "title": "Menu List",
+                "payload": "menu-list",
             },
             {
                 "content_type": "text",
@@ -1050,8 +1026,6 @@ const showOrder = async (sender_psid, order_ref) => {
 }
 
 
-
-
 const shopMenu = (sender_psid) => {
     let response = {
         "attachment": {
@@ -1076,6 +1050,140 @@ const shopMenu = (sender_psid) => {
     }
     callSend(sender_psid, response);
 }
+
+// START MENULIST
+const showMenuList = (sender_psid) => {
+    let response = {
+        "text": "Order By Category",
+        "quick_replies": [{
+            "content_type": "text",
+            "title": "Breakfast Food",
+            "payload": "breakfast-food",
+        }, {
+            "content_type": "text",
+            "title": "Lunch Food",
+            "payload": "lunch-food",
+        }, {
+            "content_type": "text",
+            "title": "Chinese Food",
+            "payload": "chinese-food",
+        }, {
+            "content_type": "text",
+            "title": "Juice",
+            "payload": "juice",
+        }]
+    };
+    callSend(sender_psid, response);
+}
+// END MENULIST
+
+// START BREAKFASTFOOD
+const showBreakfastFood = (sender_psid) => {
+    let response = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Breakfast Food",
+                    "image_url": "https://img.favpng.com/8/22/6/toy-shop-retail-toys-r-us-clip-art-png-favpng-Q5kvdVUxgvDQT9M9vmsHzByQY.jpg",
+                    "buttons": [{
+                            "type": "web_url",
+                            "title": "View",
+                            "url": APP_URL + "shop/",
+                            "webview_height_ratio": "full",
+                            "messenger_extensions": true,
+                        },
+
+                    ],
+                }]
+            }
+        }
+    }
+    callSend(sender_psid, response);
+}
+// END BREAKFASTFOOD
+
+// START LUNCHFOOD
+const showLunchFood = (sender_psid) => {
+    let response = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Lunch Food",
+                    "image_url": "https://img.favpng.com/8/22/6/toy-shop-retail-toys-r-us-clip-art-png-favpng-Q5kvdVUxgvDQT9M9vmsHzByQY.jpg",
+                    "buttons": [{
+                            "type": "web_url",
+                            "title": "View",
+                            "url": APP_URL + "shop/",
+                            "webview_height_ratio": "full",
+                            "messenger_extensions": true,
+                        },
+
+                    ],
+                }]
+            }
+        }
+    }
+    callSend(sender_psid, response);
+}
+// END LUNCHFOOD
+
+// START CHINESE FOOD
+const showChineseFood = (sender_psid) => {
+    let response = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Chinese Food",
+                    "image_url": "https://img.favpng.com/8/22/6/toy-shop-retail-toys-r-us-clip-art-png-favpng-Q5kvdVUxgvDQT9M9vmsHzByQY.jpg",
+                    "buttons": [{
+                            "type": "web_url",
+                            "title": "View",
+                            "url": APP_URL + "shop/",
+                            "webview_height_ratio": "full",
+                            "messenger_extensions": true,
+                        },
+
+                    ],
+                }]
+            }
+        }
+    }
+    callSend(sender_psid, response);
+}
+// END CHINESE FOOD
+
+// START JUICE
+const showJuice = (sender_psid) => {
+    let response = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Juice",
+                    "image_url": "https://img.favpng.com/8/22/6/toy-shop-retail-toys-r-us-clip-art-png-favpng-Q5kvdVUxgvDQT9M9vmsHzByQY.jpg",
+                    "buttons": [{
+                            "type": "web_url",
+                            "title": "View",
+                            "url": APP_URL + "shop/",
+                            "webview_height_ratio": "full",
+                            "messenger_extensions": true,
+                        },
+
+                    ],
+                }]
+            }
+        }
+    }
+    callSend(sender_psid, response);
+}
+// END JUICE
 
 
 /**************
