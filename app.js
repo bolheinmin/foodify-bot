@@ -408,7 +408,7 @@ app.get('/breakfast_food', async function(req, res) {
     }
 
 
-    const productsRef = db.collection('products').where("category", "==", "Breakfast Food").orderBy('created_on', 'desc');
+    const productsRef = db.collection('products').where("category", "==", "Breakfast Food");
     const snapshot = await productsRef.get();
 
     if (snapshot.empty) {
