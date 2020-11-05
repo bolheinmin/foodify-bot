@@ -218,9 +218,7 @@ app.get('/admin/addproduct', async function(req, res) {
     sess = req.session;
     console.log('SESS:', sess);
     if (sess.login) {
-        res.render('addproduct.ejs', {
-            data: data
-        });
+        res.render('addproduct.ejs');
     } else {
         res.send('you are not authorized to view this page');
     }
