@@ -258,27 +258,19 @@ app.post('/admin/saveproduct', upload.single('file'), function(req, res) {
 
 app.get('/admin/orders', async (req, res) => {
     // pending orders
-    const pendingOrdersRef = db.collection('orders')
-                        .orderBy('created_on', 'desc')
-                        .where('status', '==', 'pending');
+    const pendingOrdersRef = db.collection('orders').where('status', '==', 'pending');
     const snapshotPending = await pendingOrdersRef.get();
 
     // processing orders
-    const processingOrdersRef = db.collection('orders')
-                        .orderBy('created_on', 'desc')
-                        .where('status', '==', 'processing');
+    const processingOrdersRef = db.collection('orders').where('status', '==', 'processing');
     const snapshotProcessing = await processingOrdersRef.get();
 
     // completed orders
-    const completedOrdersRef = db.collection('orders')
-                        .orderBy('created_on', 'desc')
-                        .where('status', '==', 'completed');
+    const completedOrdersRef = db.collection('orders').where('status', '==', 'completed');
     const snapshotCompleted = await completedOrdersRef.get();
 
     // canceled orders
-    const canceledOrdersRef = db.collection('orders')
-                        .orderBy('created_on', 'desc')
-                        .where('status', '==', 'canceled');
+    const canceledOrdersRef = db.collection('orders').where('status', '==', 'canceled');
     const snapshotCanceled = await canceledOrdersRef.get();
 
 
