@@ -257,17 +257,45 @@ app.post('/admin/saveproduct', upload.single('file'), function(req, res) {
 });
 
 app.get('/admin/orders', async (req, res) => {
+    // pending orders
+    const pendingOrdersRef = db.collection('orders')
+                        .orderBy('created_on', 'desc')
+                        .where('status', '==', 'pending');
+    const snapshotPending = await pendingOrdersRef.get();
 
-    const ordersRef = db.collection('orders').orderBy('created_on', 'desc');
-    const snapshot = await ordersRef.get();
+    // processing orders
+    const processingOrdersRef = db.collection('orders')
+                        .orderBy('created_on', 'desc')
+                        .where('status', '==', 'processing');
+    const snapshotProcessing = await processingOrdersRef.get();
 
-    if (snapshot.empty) {
+    // completed orders
+    const completedOrdersRef = db.collection('orders')
+                        .orderBy('created_on', 'desc')
+                        .where('status', '==', 'completed');
+    const snapshotCompleted = await completedOrdersRef.get();
+
+    // canceled orders
+    const canceledOrdersRef = db.collection('orders')
+                        .orderBy('created_on', 'desc')
+                        .where('status', '==', 'canceled');
+    const snapshotCanceled = await canceledOrdersRef.get();
+
+
+    if (
+        snapshotPending.empty && 
+        snapshotProcessing.empty &&
+        snapshotCompleted.empty &&
+        snapshotCanceled.empty) {
         res.send('no data');
     } else {
 
-        let data = [];
-
-        snapshot.forEach(doc => {
+        let pendingOrders = [];
+        let processingOrders = [];
+        let completedOrders = [];
+        let canceledOrders = [];
+        // pending orders
+        snapshotPending.forEach(doc => {
             let order = {};
 
             order = doc.data();
@@ -277,14 +305,59 @@ app.get('/admin/orders', async (req, res) => {
             d = d.toString();
             order.created_on = d;
 
-            data.push(order);
+            pendingOrders.push(order);
 
         });
+
+        // processing orders
+        snapshotProcessing.forEach(doc => {
+            let order = {};
+
+            order = doc.data();
+            order.doc_id = doc.id;
+
+            let d = new Date(doc.data().created_on._seconds);
+            d = d.toString();
+            order.created_on = d;
+
+            processingOrders.push(order);
+        });
+        // completed orders
+        snapshotCompleted.forEach(doc => {
+            let order = {};
+
+            order = doc.data();
+            order.doc_id = doc.id;
+
+            let d = new Date(doc.data().created_on._seconds);
+            d = d.toString();
+            order.created_on = d;
+
+            completedOrders.push(order);
+        });
+
+        // canceled orders
+        snapshotCanceled.forEach(doc => {
+            let order = {};
+
+            order = doc.data();
+            order.doc_id = doc.id;
+
+            let d = new Date(doc.data().created_on._seconds);
+            d = d.toString();
+            order.created_on = d;
+
+            canceledOrders.push(order);
+        });
+
         sess = req.session;
         console.log('SESS:', sess);
         if (sess.login) {
             res.render('order_records.ejs', {
-                data: data
+                pendingOrders:pendingOrders,
+                processingOrders:processingOrders,
+                completedOrders:completedOrders,
+                canceledOrders:canceledOrders
             });
         } else {
             res.send('you are not authorized to view this page');
