@@ -1075,7 +1075,7 @@ const botQuestions = (current_question, sender_psid) => {
 }
 
 const startGreeting = (sender_psid) => {
-    let response = { "text": "Welcome to Thein Yar Zar." };
+    let response = { "text": "မင်္ဂလာပါ သိန်းရာဇာ စားသောက်ဆိုင်မှကြိုဆိုပါတယ်" };
     callSend(sender_psid, response).then(() => {
         showMenu(sender_psid);
     });
