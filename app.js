@@ -434,7 +434,7 @@ app.get('/breakfast_food', async function(req, res) {
     });
 
     //console.log('DATA:', data); 
-    res.render('shop.ejs', { data: data });
+    res.render('breakfast_food.ejs', { data: data });
 });
 // END BREAKFASTFOOD CATEGORY
 
@@ -486,7 +486,7 @@ app.get('/lunch_food', async function(req, res) {
     });
 
     //console.log('DATA:', data); 
-    res.render('shop.ejs', { data: data });
+    res.render('lunch_food.ejs', { data: data });
 });
 // END LUNCHFOOD CATEGORY
 
@@ -538,7 +538,7 @@ app.get('/chinese_food', async function(req, res) {
     });
 
     //console.log('DATA:', data); 
-    res.render('shop.ejs', { data: data });
+    res.render('chinese_food.ejs', { data: data });
 });
 // END CHINESEFOOD CATEGORY
 
@@ -590,7 +590,7 @@ app.get('/juice', async function(req, res) {
     });
 
     //console.log('DATA:', data); 
-    res.render('shop.ejs', { data: data });
+    res.render('juice.ejs', { data: data });
 });
 // END JUICE CATEGORY
 
