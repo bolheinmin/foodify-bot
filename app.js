@@ -801,13 +801,13 @@ app.get('/order', function(req, res) {
 });
 
 app.post('/order', function(req, res) {
-    let today = new Date();
-    // var dateObj = new Date();
-    // var month = ('0' + (dateObj.getMonth() + 1)).slice(-2);
-    // var date = ('0' + dateObj.getDate()).slice(-2);
-    // var year = dateObj.getFullYear();
-    // var shortDate = year + '/' + month + '/' + date;
-    // alert(shortDate);
+    // let today = new Date();
+
+    let dateObj = new Date();
+    let month = ('0' + (dateObj.getMonth() + 1)).slice(-2);
+    let date = ('0' + dateObj.getDate()).slice(-2);
+    let year = dateObj.getFullYear();
+    let orderDate = year + '/' + month + '/' + date;
 
 
     let data = {
@@ -820,7 +820,7 @@ app.post('/order', function(req, res) {
         total: parseInt(req.body.total),
         payment_type: req.body.payment_type,
         ref: generateRandom(6),
-        created_on: today,
+        orderDate: orderDate,
         status: "pending",
         comment: "",
     }
