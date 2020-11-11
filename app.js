@@ -668,6 +668,8 @@ app.post('/cart', function(req, res) {
     let item = {};
     item.id = req.body.item_id;
     item.name = req.body.item_name;
+    item.img = req.body.item_img;
+    item.description = req.body.item_description;
     item.price = parseInt(req.body.item_price);
     item.qty = parseInt(req.body.item_qty);
     item.total = item.price * item.qty;
