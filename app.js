@@ -293,9 +293,9 @@ app.get('/admin/orders', async (req, res) => {
             order = doc.data();
             order.doc_id = doc.id;
 
-            let d = new Date(doc.data().created_on._seconds);
-            d = d.toString();
-            order.created_on = d;
+            // let d = new Date(doc.data().created_on._seconds);
+            // d = d.toString();
+            // order.created_on = d;
 
             pendingOrders.push(order);
 
