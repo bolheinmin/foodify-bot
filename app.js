@@ -809,7 +809,7 @@ app.post('/order', function(req, res) {
     let month = ('0' + (dateObj.getMonth() + 1)).slice(-2);
     let date = ('0' + dateObj.getDate()).slice(-2);
     let year = dateObj.getFullYear();
-    let orderDate = year + '/' + month + '/' + date;
+    let orderDate = date + '/' + month + '/' + year;
 
 
     let data = {
