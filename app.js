@@ -433,6 +433,20 @@ app.post('/admin/update_order_cancel', function(req, res) {
         }).catch((err) => console.log('ERROR:', error));
 });
 
+// Delete order
+app.post('/admin/deleteOrder', function(req,res){
+    db.collection('orders').doc(req.body.doc_id).delete().then(() => {
+        res.redirect('/admin/orders');
+    }).catch((err) => console.log('ERROR:', error));
+});
+
+// Delete product
+app.post('/admin/deleteProduct', function(req,res){
+    db.collection('products').doc(req.body.doc_id).delete().then(() => {
+        res.redirect('/admin/products');
+    }).catch((err) => console.log('ERROR:', error));
+});
+
 //route url
 // ALL CATEGORIES
 app.get('/shop', async function(req, res) {

@@ -66,7 +66,7 @@
                                                     <i class="icofont-info"></i>
                                                 </a>
                                                 <!-- processing order button -->
-                                                <form class="d-inline-block" onsubmit="return confirm('Are you sure want to process?')" method="post" action="../../admin/update_order_process">
+                                                <form class="d-inline-block" onsubmit="return confirm('Are you sure want to process?')" method="post" action="update_order_process">
 
                                                     <input type="hidden" name="doc_id" value="<%= order.doc_id %>">
 
@@ -81,7 +81,7 @@
 
                                                     <input type="hidden" name="doc_id" value="<%= order.doc_id %>">
 
-                                                    <button type="submit" class="btn btn-outline-success">
+                                                    <button class="btn btn-outline-success">
                                                         <i class="icofont-ui-check"></i>
                                                     </button>
                                                 </form>
@@ -90,7 +90,7 @@
 
                                                     <input type="hidden" name="doc_id" value="<%= order.doc_id %>">
 
-                                                    <button type="submit" class="btn btn-outline-danger">
+                                                    <button class="btn btn-outline-danger">
                                                         <i class="icofont-close"></i>
                                                     </button>
                                                 </form>
@@ -151,7 +151,7 @@
 
                                                     <input type="hidden" name="doc_id" value="<%= order.doc_id %>">
 
-                                                    <button type="submit" class="btn btn-outline-success">
+                                                    <button class="btn btn-outline-success">
                                                         <i class="icofont-ui-check"></i>
                                                     </button>
                                                 </form>
@@ -161,7 +161,7 @@
 
                                                     <input type="hidden" name="doc_id" value="<%= order.doc_id %>">
 
-                                                    <button type="submit" class="btn btn-outline-danger">
+                                                    <button class="btn btn-outline-danger">
                                                         <i class="icofont-close"></i>
                                                     </button>
                                                 </form>
@@ -216,6 +216,15 @@
                                                 <a href="orderDetail/<%= order.doc_id %>" class="btn btn-outline-info">
                                                     <i class="icofont-info"></i>
                                                 </a>
+                                                <!-- delete order button -->
+                                                <form class="d-inline-block" onsubmit="return confirm('Are you sure want to delete?')" method="POST" action="deleteOrder">
+
+                                                    <input type="hidden" name="doc_id" value="<%= order.doc_id %>">
+
+                                                    <button class="btn btn-outline-danger">
+                                                        <i class="icofont-trash"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                         <% }); %>
