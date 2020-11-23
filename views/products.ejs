@@ -30,7 +30,7 @@
                                 <% data.forEach(function(product){ %>
                                 <tr>
                                     <td>
-                                        <%= i++ %>
+                                        <%= i++ %>.
                                     </td>
                                     <td>
                                         <div class="d-flex no-block align-items-center">
@@ -43,7 +43,7 @@
                                                     <%= product.name %>
                                                 </h5>
                                                 <span class="text-muted font-14">
-                                                    <%= product.description.substring(0, 10) %>...
+                                                    <%= (product.description).substring(0, 10) %>...
                                                 </span>
                                             </div>
                                         </div>

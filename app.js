@@ -147,13 +147,13 @@ app.get('/', function(req, res) {
 app.post('/login', function(req, res) {
     sess = req.session;
 
-    let username = req.body.username;
+    let email = req.body.email;
     let password = req.body.password;
 
-    if (username == 'admin' && password == process.env.ADMIN_PW) {
-        sess.username = 'admin';
+    if (email == 'admin@gmail.com' && password == process.env.ADMIN_PW) {
+        sess.email = 'admin@gmail.com';
         sess.login = true;
-        res.redirect('/admin/products');
+        res.redirect('/admin/orders');
     } else {
         res.send('login failed');
     }
