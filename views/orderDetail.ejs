@@ -1,26 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <!-- Main CSS-->
-  <link rel="stylesheet" type="text/css" href="../public/css/bootstrap.min.css">
-  <!-- iconfont CSS -->
-  <link rel="stylesheet" type="text/css" href="../public/icon/icofont/icofont.min.css">
-  <style>
-    .one {
-      border-color: #408BEA;
-      border-left: solid 5px #408bea;
-      padding-left: 10px;
-    }
-  </style>
-</head>
-
-<body>
-
-  <main class="app-content">
+<%- include('partials/header.ejs') %>
+<main class="app-content">
     <!-- main content -->
     <div class="app-title">
       <div>
@@ -42,7 +21,7 @@
               </div>
               <div class="col-6">
                 <h5 class="text-right">Date:
-                  20/12/2020
+                    <%= data.date %>
                 </h5>
               </div>
             </div>
@@ -53,13 +32,13 @@
               </div>
               <div class="col-4">To
                 <address>
-                  <strong>Hein  Min Htet</strong><br>
-                  Nay Pyi Taw <br>
-                  Phone: 097845212321 </address>
+                  <strong><%= data.name %></strong><br>
+                  <%= data.address %> <br>
+                  Phone: <%= data.phone %> </address>
               </div>
-              <div class="col-4"><b>Invoice #451446154
+              <div class="col-4"><b>Invoice #<%= data.ref %>
                 </b><br><br>
-                <b>Total:</b> 500000 Ks </div>
+                <b>Total:</b> <%= data.total %> Ks </div>
             </div>
             <div class="row">
               <div class="col-12 table-responsive">
@@ -76,12 +55,11 @@
                   <tbody>
                     <tr>
                       <td> 1. </td>
-                      <td> ကြာဇံကြော်*1 </td>
-                      <td> JXj1a5 </td>
-                      <td> 20000 ks </td>
-                      <td> 50000 Ks </td>
+                      <td> <%= data.items %> </td>
+                      <td> <%= data.ref %> </td>
+                      <td> <%= data.discount %> Ks </td>
+                      <td> <%= data.sub_total %> Ks </td>
                     </tr>
-
                   </tbody>
                 </table>
               </div>
@@ -94,11 +72,5 @@
         </div>
       </div>
     </div>
-  </main>
-  <!-- scripts -->
-  <script src="../public/js/jquery-3.3.1.min.js"></script>
-  <script src="../public/js/popper.min.js"></script>
-  <script src="../public/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+</main>
+<%- include('partials/footer.ejs') %>  
