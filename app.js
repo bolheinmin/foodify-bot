@@ -163,7 +163,7 @@ app.get('/login', function(req, res) {
     sess = req.session;
 
     if (sess.login) {
-        res.redirect('/admin/products');
+        res.redirect('/admin/orders');
     } else {
         res.render('login.ejs');
     }
@@ -253,6 +253,43 @@ app.post('/admin/saveproduct', upload.single('file'), function(req, res) {
         }).catch((error) => {
             console.error(error);
         });
+    }
+});
+
+// customers
+app.get('/admin/customers', async (req, res) => {
+
+    const usersRef = db.collection('users').orderBy('created_on', 'desc');
+    const snapshot = await usersRef.get();
+
+    if (snapshot.empty) {
+        res.send('no data');
+    } else {
+        let data = [];
+
+        snapshot.forEach(doc => {
+            let user = {};
+
+            user = doc.data();
+            user.doc_id = doc.id;
+
+            let d = new Date(doc.data().created_on._seconds);
+            d = d.toString();
+            user.created_on = d;
+
+
+            data.push(user);
+
+        });
+        sess = req.session;
+        console.log('SESS:', sess);
+        if (sess.login) {
+            res.render('customers.ejs', {
+                data: data
+            });
+        } else {
+            res.send('you are not authorized to view this page');
+        }
     }
 });
 
