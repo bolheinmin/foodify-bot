@@ -66,18 +66,18 @@
                                                     <i class="icofont-info"></i>
                                                 </a>
                                                 <!-- processing order button -->
-                                                <form id="form" class="d-inline-block" method="post" action="../../admin/update_order">
+                                                <form class="d-inline-block" onsubmit="return confirm('Are you sure want to process?')" method="post" action="../../admin/update_order_process">
 
                                                     <input type="hidden" name="doc_id" value="<%= order.doc_id %>">
 
-                                                    <button type="submit" class="btn btn-outline-info">
+                                                    <button class="btn btn-outline-secondary">
                                                         <i class="icofont-recycle"></i>
                                                     </button>
 
                                                 </form>
 
                                                 <!-- completed order button -->
-                                                <form class="d-inline-block" method="POST" action="../update_order">
+                                                <form class="d-inline-block" onsubmit="return confirm('Are you sure want to complete?')" method="POST" action="../../admin/update_order_complete">
 
                                                     <input type="hidden" name="doc_id" value="<%= order.doc_id %>">
 
@@ -86,9 +86,9 @@
                                                     </button>
                                                 </form>
                                                 <!-- canceled order button -->
-                                                <form class="d-inline-block" onsubmit="return confirm('Are you sure want to cancel?')" method="POST" action="item_delete.php">
+                                                <form class="d-inline-block" onsubmit="return confirm('Are you sure want to cancel?')" method="POST" action="../../admin/update_order_cancel">
 
-                                                    <input type="hidden" name="id" value="<?= $id ?>">
+                                                    <input type="hidden" name="doc_id" value="<%= order.doc_id %>">
 
                                                     <button type="submit" class="btn btn-outline-danger">
                                                         <i class="icofont-close"></i>
@@ -134,6 +134,9 @@
                                             </td>
                                             <td>
                                                 <%= order.phone %>
+                                            </td>
+                                            <td>
+                                                <%= order.orderDate %>
                                             </td>
                                             <td>
                                                 <%= order.status %>
@@ -192,7 +195,7 @@
                                                 <%= order.phone %>
                                             </td>
                                             <td>
-                                                <%= order.date %>
+                                                <%= order.orderDate %>
                                             </td>
                                             <td>
                                                 <%= order.status %>
@@ -251,7 +254,7 @@
                                                 <%= order.phone %>
                                             </td>
                                             <td>
-                                                <%= order.date %>
+                                                <%= order.orderDate %>
                                             </td>
                                             <td>
                                                 <%= order.status %>

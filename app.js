@@ -393,19 +393,45 @@ app.get('/admin/update_order/:doc_id', async function(req, res) {
     }
 });
 
+// Processing order
+app.post('/admin/update_order_process', function(req, res) {
 
-app.post('/admin/update_order', function(req, res) {
-
-    let data = {
-        status: "processing",
-    }
+    // let data = {
+    //     status: "processing",
+    // }
 
     db.collection('orders').doc(req.body.doc_id)
-        .update(data).then(() => {
+        .update({status: "processing"}).then(() => {
             res.redirect('/admin/orders');
         }).catch((err) => console.log('ERROR:', error));
 });
 
+// Completed order
+app.post('/admin/update_order_complete', function(req, res) {
+
+    // let data = {
+    //     status: "processing",
+    // }
+
+    db.collection('orders').doc(req.body.doc_id)
+        .update({status: "completed"}).then(() => {
+            res.redirect('/admin/orders');
+        }).catch((err) => console.log('ERROR:', error));
+});
+
+// Canceled order
+
+app.post('/admin/update_order_cancel', function(req, res) {
+
+    // let data = {
+    //     status: "processing",
+    // }
+
+    db.collection('orders').doc(req.body.doc_id)
+        .update({status: "canceled"}).then(() => {
+            res.redirect('/admin/orders');
+        }).catch((err) => console.log('ERROR:', error));
+});
 
 //route url
 // ALL CATEGORIES
