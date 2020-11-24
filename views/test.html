@@ -10,7 +10,7 @@
   <!-- iconfont CSS -->
   <link rel="stylesheet" type="text/css" href="../public/icon/icofont/icofont.min.css">
   <style>
-    .one {
+    .border_left {
       border-color: #408BEA;
       border-left: solid 5px #408bea;
       padding-left: 10px;
@@ -20,82 +20,123 @@
 
 <body>
 
-  <main class="app-content">
-    <!-- main content -->
-    <div class="app-title">
-      <div>
-        <h1> <i class="icofont-list"></i> Invoice</h1>
-      </div>
-      <ul class="app-breadcrumb breadcrumb side">
-        <a href="order_list.php" class="btn btn-outline-primary">
-          <i class="icofont-double-left"></i>
+  <script>
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/messenger.Extensions.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'Messenger'));
+
+    const APP_ID = 1437772286611018;
+    var senderID = "";
+
+    window.extAsyncInit = function () {
+      MessengerExtensions.getContext(APP_ID,
+        function success(thread_context) {
+          senderID = thread_context.psid;
+        },
+        function error(err) {
+          console.log(err);
+        }
+      );
+    };
+  </script>
+
+  <div class="container mt-5">
+    <h2 class="border_left"> Order Summary </h2>
+    <div class="row mt-3">
+      <div class="col-6">
+        <a href="../cart" class="btn mainfullbtncolor btn-outline-secondary float-left">
+          <i class="icofont-shopping-cart"></i>
+          Cart
         </a>
-      </ul>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="tile">
-          <section class="invoice">
-            <div class="row mb-4">
-              <div class="col-6">
-                <h1>Thein Yar Zar</h1>
-              </div>
-              <div class="col-6">
-                <h5 class="text-right">Date:
-                  20/12/2020
-                </h5>
-              </div>
-            </div>
-
-            <div class="row invoice-info">
-              <div class="col-4">From
-                <address><strong>Thein Yar Zar.</strong></address>
-              </div>
-              <div class="col-4">To
-                <address>
-                  <strong>Hein  Min Htet</strong><br>
-                  Nay Pyi Taw <br>
-                  Phone: 097845212321 </address>
-              </div>
-              <div class="col-4"><b>Invoice #451446154
-                </b><br><br>
-                <b>Total:</b> 500000 Ks </div>
-            </div>
-            <div class="row">
-              <div class="col-12 table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th> No </th>
-                      <th> Product </th>
-                      <th> Ref No </th>
-                      <th> Discount </th>
-                      <th> Subtotal </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 1. </td>
-                      <td> ကြာဇံကြော်*1 </td>
-                      <td> JXj1a5 </td>
-                      <td> 20000 ks </td>
-                      <td> 50000 Ks </td>
-                    </tr>
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="row d-print-none mt-2">
-              <div class="col-12 text-right"><a class="btn btn-primary" href="javascript:window.print();"
-                  target="_blank"><i class="fa fa-print"></i> Print</a></div>
-            </div>
-          </section>
-        </div>
       </div>
     </div>
-  </main>
+    <div class="row mt-3">
+      <div class="col-md-12 table-responsive">
+        <table class="table">
+          <tbody>
+            <% cart.forEach(function(item){ %>
+            <tr>
+              <td colspan="2" class="text-center"><%= item.name %> * <%= item.qty %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th class="text-center">SubTotal</th>
+              <td><%= sub_total %> Ks</td>
+            </tr>
+            <tr>
+              <th class="text-center">Discount</th>
+              <td>-<%= discount %> Ks</td>
+            </tr>
+            <tr>
+              <th class="text-center">Total</th>
+              <td><%= cart_total %> Ks</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="row my-5">
+      <div class="col-md-12">
+        <h3 class="text-center">Personal Information</h3>
+        <form id="form" action="../order" method="post">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" value="<%= user.name %>" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" class="form-control" value="<%= user.phone %>" id="phone" name="phone" required>
+          </div>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <textarea class="form-control" id="address" rows="3" name="address" required>
+              <%= user.address %>
+            </textarea>
+          </div>
+          <div class="form-group">
+            <label for="payment">Payment Method</label>
+            <select class="form-control" id="payment" name="payment_type" required>
+              <option value="Cash On Delivery">Cash On Delivery</option>
+            </select>
+          </div>
+          <input type="hidden" name="items" value="<%= items %>">
+          <input type="hidden" name="sub_total" value="<%= sub_total %>" />
+          <input type="hidden" name="discount" value="<%= discount %>" />
+          <input type="hidden" name="total" value="<%= cart_total %>" />
+          <button type="submit" class="btn btn-primary">Order</button>
+        </form>
+      </div>
+    </div>
+  </div>
   <!-- scripts -->
+  <script>
+    const windowShut = () => {
+
+      setTimeout(() => {
+
+        MessengerExtensions.requestCloseBrowser(function success() {
+          console.log("success");
+        }, function error(err) {
+          console.log(err);
+        });
+
+
+      }, 2000);
+
+
+    }
+
+    document.getElementById("form").addEventListener("submit", windowShut);
+  </script>
   <script src="../public/js/jquery-3.3.1.min.js"></script>
   <script src="../public/js/popper.min.js"></script>
   <script src="../public/js/bootstrap.min.js"></script>
