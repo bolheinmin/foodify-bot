@@ -909,7 +909,6 @@ app.post('/order', function(req, res) {
         ref: generateRandom(6),
         orderDate: orderDate,
         status: "pending",
-        comment: "",
     }
 
 
@@ -1373,16 +1372,20 @@ const showOrder = async (sender_psid, order_ref) => {
         snapshot.forEach(doc => {
             order.ref = doc.data().ref;
             order.status = doc.data().status;
-            order.comment = doc.data().comment;
+            order.items = doc.data().items;
+            order.total = doc.data().total;
         });
 
 
         let response1 = { "text": `Your order ${order.ref} is ${order.status}.` };
-        let response2 = { "text": `Seller message: ${order.comment}.` };
-        let response3 = { "text": `You have remaining ${cust_points} point(s)` };
+        let response2 = { "text": `Order Summery: ${order.items}.` };
+        let response3 = { "text": `Total Price: ${order.total} Ks` };
+        let response4 = { "text": `You have remaining ${cust_points} point(s)` };
         callSend(sender_psid, response1).then(() => {
             return callSend(sender_psid, response2).then(() => {
-                return callSend(sender_psid, response3)
+                return callSend(sender_psid, response3).then(() => {
+                    return callSend(sender_psid, response4)
+                });
             });
         });
 
