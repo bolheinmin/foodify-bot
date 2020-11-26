@@ -1078,6 +1078,9 @@ const handleMessage = (sender_psid, received_message) => {
             case "start":
                 startGreeting(sender_psid);
                 break;
+            case "menu":
+                showMenuList(sender_psid);
+                break;
             case "check-order":
                 current_question = "q4";
                 botQuestions(current_question, sender_psid);
@@ -1326,7 +1329,7 @@ const shopMenu = (sender_psid) => {
                     "image_url": "https://i.imgur.com/ntip7Ic.png",
                     "buttons": [{
                             "type": "web_url",
-                            "title": "Shop Now",
+                            "title": "View",
                             "url": APP_URL + "shop/",
                             "webview_height_ratio": "full",
                             "messenger_extensions": true,
