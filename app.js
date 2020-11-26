@@ -24,10 +24,10 @@ app.use(express.static(__dirname + '/public'));
 
 
 const bot_questions = {
-    "q1": "please enter your full name",
-    "q2": "please enter your phone number",
-    "q3": "please enter your address",
-    "q4": "please enter your order reference number"
+    "q1": "Please enter your full name",
+    "q2": "Please enter your phone number",
+    "q3": "Please enter your address",
+    "q4": "Please enter your order reference number"
 }
 
 let sess;
@@ -901,6 +901,7 @@ app.post('/order', function(req, res) {
         name: req.body.name,
         phone: req.body.phone,
         address: req.body.address,
+        note: req.body.note,
         items: req.body.items,
         sub_total: parseInt(req.body.sub_total),
         discount: parseInt(req.body.discount),
@@ -928,7 +929,9 @@ app.post('/order', function(req, res) {
 
         db.collection('users').doc(user_id).update(update_data).then((success) => {
             console.log('POINT UPDATE:');
-            let text = "Thank you. Your order has been confirmed. Your order reference number is " + data.ref;
+            let text = "Thank you. Order ကိုအတည်ပြုပြီးပါပြီ."+ "\u000A";
+            text += " မှာယူပြီး မိနစ်သုံးဆယ်အတွင်းရပါမည် "+ "\u000A";
+            text += "Your booking reference number is:" + data.ref;
             let response = { "text": text };
             callSend(user_id, response);
 
@@ -1069,8 +1072,9 @@ const handleMessage = (sender_psid, received_message) => {
         user_message = user_message.toLowerCase();
 
         switch (user_message) {
-
-
+            case "hi":
+            startGreeting(sender_psid);
+            break;
             case "start":
                 startGreeting(sender_psid);
                 break;
@@ -1087,44 +1091,6 @@ const handleMessage = (sender_psid, received_message) => {
 
 }
 
-/*********************************************
-Function to handle when user send attachment
-**********************************************/
-
-
-const handleAttachments = (sender_psid, attachments) => {
-
-    console.log('ATTACHMENT', attachments);
-
-
-    let response;
-    let attachment_url = attachments[0].payload.url;
-    response = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Is this the right picture?",
-                    "subtitle": "Tap a button to answer.",
-                    "image_url": attachment_url,
-                    "buttons": [{
-                            "type": "postback",
-                            "title": "Yes!",
-                            "payload": "yes-attachment",
-                        },
-                        {
-                            "type": "postback",
-                            "title": "No!",
-                            "payload": "no-attachment",
-                        }
-                    ],
-                }]
-            }
-        }
-    }
-    callSend(sender_psid, response);
-}
 
 
 /*********************************************
@@ -1138,30 +1104,16 @@ const handlePostback = (sender_psid, received_postback) => {
 
     console.log('BUTTON PAYLOAD', payload);
 
-
-    if (payload.startsWith("Doctor:")) {
-        let doctor_name = payload.slice(7);
-        console.log('SELECTED DOCTOR IS: ', doctor_name);
-        userInputs[user_id].doctor = doctor_name;
-        console.log('TEST', userInputs);
-        firstOrFollowUp(sender_psid);
-    } else {
-
-        switch (payload) {
-            case "yes":
-                showButtonReplyYes(sender_psid);
-                break;
-            case "no":
-                showButtonReplyNo(sender_psid);
-                break;
-            default:
-                defaultReply(sender_psid);
-        }
-
+    switch (payload) {
+        case "get_started":
+            startGreeting(sender_psid);
+            break;
+        case "no":
+            showButtonReplyNo(sender_psid);
+            break;
+        default:
+            defaultReply(sender_psid);
     }
-
-
-
 }
 
 
@@ -1174,35 +1126,6 @@ const generateRandom = (length) => {
     }
     return result;
 }
-
-
-
-
-function webviewTest(sender_psid) {
-    let response;
-    response = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Click to open webview?",
-                    "buttons": [{
-                            "type": "web_url",
-                            "title": "webview",
-                            "url": APP_URL + "webview/" + sender_psid,
-                            "webview_height_ratio": "full",
-                            "messenger_extensions": true,
-                        },
-
-                    ],
-                }]
-            }
-        }
-    }
-    callSendAPI(sender_psid, response);
-}
-
 
 
 
