@@ -931,7 +931,7 @@ app.post('/order', function(req, res) {
             console.log('POINT UPDATE:');
             let text = "Thank you. Order ကိုအတည်ပြုပြီးပါပြီ."+ "\u000A";
             text += " မှာယူပြီး မိနစ်သုံးဆယ်အတွင်းရပါမည် "+ "\u000A";
-            text += "Your booking reference number is:" + data.ref;
+            text += "Your booking reference number is: " + data.ref;
             let response = { "text": text };
             callSend(user_id, response);
 
@@ -1007,7 +1007,7 @@ function handleQuickReply(sender_psid, received_message) {
             current_question = "q4";
             botQuestions(current_question, sender_psid);
             break;
-        case "shop":
+        case "all-fd":
             shopMenu(sender_psid);
             break;
         case "menu-list":
@@ -1174,21 +1174,25 @@ const showMenu = async (sender_psid) => {
                 "content_type": "text",
                 "title": title,
                 "payload": "register",
+                "image_url":"https://i.imgur.com/4M4LQ6x.jpg"
             }, 
             {
                 "content_type": "text",
-                "title": "Shop",
-                "payload": "shop",
+                "title": "All Foods and Drinks",
+                "payload": "all-fd",
+                "image_url":"https://i.imgur.com/ntip7Ic.png"
             },
             {
                 "content_type": "text",
                 "title": "Menu List",
                 "payload": "menu-list",
+                "image_url":"https://i.imgur.com/t3dDjS9.png"
             },
             {
                 "content_type": "text",
                 "title": "My Order",
                 "payload": "check-order",
+                "image_url":"https://i.imgur.com/QYeFrSK.png"
             }
 
         ]
@@ -1318,8 +1322,8 @@ const shopMenu = (sender_psid) => {
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "title": "Shopplus",
-                    "image_url": "https://img.favpng.com/8/22/6/toy-shop-retail-toys-r-us-clip-art-png-favpng-Q5kvdVUxgvDQT9M9vmsHzByQY.jpg",
+                    "title": "All Foods and Drinks",
+                    "image_url": "https://i.imgur.com/ntip7Ic.png",
                     "buttons": [{
                             "type": "web_url",
                             "title": "Shop Now",
@@ -1344,18 +1348,22 @@ const showMenuList = (sender_psid) => {
             "content_type": "text",
             "title": "Breakfast Food",
             "payload": "breakfast-food",
+            "image_url":"https://i.imgur.com/IBn8L5w.png"
         }, {
             "content_type": "text",
             "title": "Lunch Food",
             "payload": "lunch-food",
+            "image_url":"https://i.imgur.com/4CgknJW.png"
         }, {
             "content_type": "text",
             "title": "Chinese Food",
             "payload": "chinese-food",
+            "image_url":"https://i.imgur.com/fCYPlIW.png"
         }, {
             "content_type": "text",
             "title": "Juice",
             "payload": "juice",
+            "image_url":"https://i.imgur.com/clhBWtd.png"
         }]
     };
     callSend(sender_psid, response);
@@ -1371,7 +1379,7 @@ const showBreakfastFood = (sender_psid) => {
                 "template_type": "generic",
                 "elements": [{
                     "title": "Breakfast Food",
-                    "image_url": "https://img.favpng.com/8/22/6/toy-shop-retail-toys-r-us-clip-art-png-favpng-Q5kvdVUxgvDQT9M9vmsHzByQY.jpg",
+                    "image_url": "https://i.imgur.com/g56xn3n.jpg",
                     "buttons": [{
                             "type": "web_url",
                             "title": "View",
@@ -1398,7 +1406,7 @@ const showLunchFood = (sender_psid) => {
                 "template_type": "generic",
                 "elements": [{
                     "title": "Lunch Food",
-                    "image_url": "https://img.favpng.com/8/22/6/toy-shop-retail-toys-r-us-clip-art-png-favpng-Q5kvdVUxgvDQT9M9vmsHzByQY.jpg",
+                    "image_url": "https://i.imgur.com/4CgknJW.png",
                     "buttons": [{
                             "type": "web_url",
                             "title": "View",
@@ -1425,7 +1433,7 @@ const showChineseFood = (sender_psid) => {
                 "template_type": "generic",
                 "elements": [{
                     "title": "Chinese Food",
-                    "image_url": "https://img.favpng.com/8/22/6/toy-shop-retail-toys-r-us-clip-art-png-favpng-Q5kvdVUxgvDQT9M9vmsHzByQY.jpg",
+                    "image_url": "https://i.imgur.com/XyYl1DF.jpg",
                     "buttons": [{
                             "type": "web_url",
                             "title": "View",
@@ -1452,7 +1460,7 @@ const showJuice = (sender_psid) => {
                 "template_type": "generic",
                 "elements": [{
                     "title": "Juice",
-                    "image_url": "https://img.favpng.com/8/22/6/toy-shop-retail-toys-r-us-clip-art-png-favpng-Q5kvdVUxgvDQT9M9vmsHzByQY.jpg",
+                    "image_url": "https://i.imgur.com/jDddJzk.jpg",
                     "buttons": [{
                             "type": "web_url",
                             "title": "View",
